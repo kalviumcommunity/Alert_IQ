@@ -63,7 +63,8 @@ class ChatClient:
         temperature: float = 0.7,
         max_tokens: Optional[int] = 1000,
         top_p: Optional[float] = None,
-        stop: Optional[List[str]] = None
+        stop: Optional[List[str]] = None,
+        response_format: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
         """
         Sends a chat completion request to the configured API.
@@ -74,6 +75,7 @@ class ChatClient:
             max_tokens: Maximum tokens in completion.
             top_p: Nucleus sampling probability threshold.
             stop: List of stop sequences to halt generation.
+            response_format: Output format specifier, e.g. {"type": "json_object"}.
 
         Returns:
             The model's text response string, or None if the request failed.
@@ -95,6 +97,8 @@ class ChatClient:
             payload["top_p"] = top_p
         if stop is not None:
             payload["stop"] = stop
+        if response_format is not None:
+            payload["response_format"] = response_format
 
         # Task 3: Log outgoing request payload
         logger.info("Sending chat completion request to: %s", endpoint)
