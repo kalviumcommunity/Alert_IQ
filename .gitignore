@@ -14,3 +14,4 @@ __pycache__/
 !logs/sample_output.log
 !logs/prompt_comparison_output.log
 !logs/token_cost_report.log
+!logs/history_trimming_demo.log
