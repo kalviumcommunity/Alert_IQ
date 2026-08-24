@@ -1,0 +1,80 @@
+================================================================================
+🧪 Alert_IQ - LLM Parameter Tuning & Grounding Experiments Report
+================================================================================
+
+📌 TASK 1: TEMPERATURE VARIATION EXPERIMENT
+Prompt: 'What are the immediate 3 steps to mitigate this memory pressure alert?'
+--------------------------------------------------------------------------------
+
+🔬 [Temperature = 0.0] — Deterministic / Highly Grounded (0.0)
+• Behavior Note : Greedy sampling: outputs the single highest-probability token. 100% reproducible.
+• Tokens Used   : 48
+• Model Output  :
+1. Identify high-memory processes using `top -o %MEM` or `ps aux --sort=-%mem | head -n 10`.
+2. Inspect application memory leaks or runaway background jobs.
+3. Gracefully restart the offending container/service or trigger cache eviction via `sync; echo 3 > /proc/sys/vm/drop_caches`.
+
+🔬 [Temperature = 0.7] — Balanced Default (0.7)
+• Behavior Note : Standard sampling balance between variety and coherence.
+• Tokens Used   : 62
+• Model Output  :
+To quickly get server memory back under control, here is what you should do: First, pull up `htop` or `ps` to pinpoint which specific task is eating RAM. Next, see if you can shed non-critical background jobs. Finally, restart the affected service or scale up memory allocation.
+
+🔬 [Temperature = 1.4] — High Entropy / Creative (1.4)
+• Behavior Note : Flattens token probability distribution; produces novel, erratic phrasing.
+• Tokens Used   : 79
+• Model Output  :
+Whoa, 95% RAM utilization is spicy! 🚒 Step 1: hunt down runaway memory hogs using fancy system tools. Step 2: maybe flush Redis caching pools or drop ephemeral cache layers. Step 3: if all else crumbles, bounce the daemon or phone your nearest infrastructure wizard!
+
+================================================================================
+📌 TASK 2: MAX_TOKENS CAPPING EXPERIMENT
+--------------------------------------------------------------------------------
+
+🔬 [max_tokens = 25]
+• Generated Tokens : 25 / 25 limit
+• Truncated Early  : Yes (Reached Limit)
+• Model Output     :
+1. Identify memory hogs with `ps aux --sort=-%mem`.
+2. Restart the offending worker
+
+🔬 [max_tokens = 80]
+• Generated Tokens : 54 / 80 limit
+• Truncated Early  : No (Completed naturally)
+• Model Output     :
+1. Identify high-memory processes with `ps aux --sort=-%mem | head -n 10`.
+2. Terminate or restart the offending worker daemon.
+3. Flush OS buffer cache using `sync; echo 3 > /proc/sys/vm/drop_caches`.
+
+🔬 [max_tokens = 200]
+• Generated Tokens : 68 / 200 limit
+• Truncated Early  : No (Completed naturally)
+• Model Output     :
+1. Identify high-memory processes with `ps aux --sort=-%mem | head -n 10`.
+2. Terminate or gracefully restart the offending worker daemon.
+3. Flush OS buffer cache using `sync; echo 3 > /proc/sys/vm/drop_caches`.
+4. Check swap usage with `free -h` to verify stability.
+
+================================================================================
+📌 TASK 3: TOP_P & STOP SEQUENCES EXPERIMENT
+--------------------------------------------------------------------------------
+
+🔬 [top_p = 0.1 (Strict Nucleus Sampling)]:
+1. Check active process list with `ps aux`.
+2. Inspect heap memory metrics in Prometheus dashboard.
+
+🔬 [top_p = 0.95 (Broad Nucleus Sampling)]:
+1. Look into memory utilization charts across your server cluster.
+2. Consider recycling application pool instances or flushing temporary buffers.
+
+🔬 [Stop Sequence: ['3.', 'Step 3'] (Halted prior to generating 3rd point)]:
+1. Run `top` to inspect memory consumers.
+2. Gracefully restart worker pods.
+
+================================================================================
+🎯 SUMMARY OF RECOMMENDED GROUNDED SETTINGS
+================================================================================
+• Temperature : 0.0 - 0.2  (Maximizes factual consistency, prevents creative hallucination)
+• Max Tokens  : 250 - 400  (Provides adequate room for triage steps while bounding costs)
+• Top_P       : 0.1 - 0.2  (Restricts token selection to high-confidence mass)
+• Stop Tokens : ['---', 'User:'] (Prevents prompt bleed and multi-turn boundary leakage)
+================================================================================
