@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alert_IQ Infrastructure Health Snapshot</title>
+    <style>body { font-family: sans-serif; }</style>
+</head>
+<body>
+    <h1>Alert_IQ Core Cluster Health Report</h1>
+    <p>Export Date: 2026-08-24 UTC</p>
+    <section>
+        <h2>Authentication Service (auth-service)</h2>
+        <p>Status: Healthy. Average latency 34ms, error rate 0.02%. 12 active pod replicas running across 3 availability zones.</p>
+    </section>
+    <section>
+        <h2>Billing & Payment API (billing-api)</h2>
+        <p>Status: Degraded. Intermittent 504 Gateway Timeouts detected on external payment provider webhooks. Auto-retry mechanism engaged.</p>
+    </section>
+</body>
+</html>
