@@ -16,3 +16,4 @@ __pycache__/
 !logs/token_cost_report.log
 !logs/history_trimming_demo.log
 !logs/parameter_experiments_output.log
+!logs/structured_output_samples.log
