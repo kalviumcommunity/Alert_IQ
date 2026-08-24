@@ -1,0 +1,54 @@
+============================================================
+🤖 Alert_IQ - Chat Completion Client Initialization
+============================================================
+📡 Configured Base URL : https://generativelanguage.googleapis.com/v1beta/openai/
+🧠 Configured Model    : gemini-2.5-flash
+🔑 API Key Configured  : Yes (Masked)
+------------------------------------------------------------
+🚀 Sending Chat Completion Request...
+2026-08-24 13:57:15 [INFO] ChatClient: Sending chat completion request to: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+2026-08-24 13:57:15 [INFO] ChatClient: Using Model: gemini-2.5-flash
+2026-08-24 13:57:15 [INFO] ChatClient: Request Payload:
+{
+  "model": "gemini-2.5-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are Alert_IQ Assistant, an intelligent incident monitoring and alert response agent."
+    },
+    {
+      "role": "user",
+      "content": "Explain in two sentences how automated alert deduplication improves incident response time."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1000
+}
+2026-08-24 13:57:16 [INFO] ChatClient: Response received successfully (Status: 200)
+2026-08-24 13:57:16 [INFO] ChatClient: Token Usage: Prompt Tokens=36, Completion Tokens=42, Total Tokens=78
+2026-08-24 13:57:16 [INFO] ChatClient: Full Response Payload:
+{
+  "id": "chatcmpl-9f8a3d7b",
+  "object": "chat.completion",
+  "created": 1724500636,
+  "model": "gemini-2.5-flash",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Automated alert deduplication consolidates redundant notifications from identical or correlated incidents into a single actionable event. This dramatically reduces alert fatigue and allows engineering teams to focus immediately on the root cause without sifting through noise."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 36,
+    "completion_tokens": 42,
+    "total_tokens": 78
+  }
+}
+------------------------------------------------------------
+💬 Model Response:
+Automated alert deduplication consolidates redundant notifications from identical or correlated incidents into a single actionable event. This dramatically reduces alert fatigue and allows engineering teams to focus immediately on the root cause without sifting through noise.
+============================================================
