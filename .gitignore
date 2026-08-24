@@ -18,3 +18,4 @@ __pycache__/
 !logs/parameter_experiments_output.log
 !logs/structured_output_samples.log
 !logs/template_render_examples.log
+!logs/document_loader_intake.log

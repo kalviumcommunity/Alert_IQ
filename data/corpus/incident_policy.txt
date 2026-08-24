@@ -1,0 +1,10 @@
+ALERT_IQ ON-CALL ESCALATION POLICY (REV 2026.3)
+
+1. Level 1 Notification (0 - 5 Minutes):
+Automated alert dispatches to primary on-call engineer via PagerDuty and Slack #incidents channel.
+
+2. Level 2 Escalation (5 - 15 Minutes):
+If incident unacknowledged after 5 minutes, alert automatically escalates to secondary engineer and Engineering Manager.
+
+3. Level 3 Major Incident Protocol (15+ Minutes):
+For Severity 1 (CRITICAL) outages impacting customer transactions, initiate War Room video bridge and post public status updates every 20 minutes.

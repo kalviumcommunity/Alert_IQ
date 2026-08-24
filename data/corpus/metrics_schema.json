@@ -1,0 +1,9 @@
+{
+  "system": "Alert_IQ Telemetry Engine",
+  "sla_thresholds": {
+    "critical_response_time_seconds": 300,
+    "high_response_time_seconds": 900,
+    "medium_response_time_seconds": 7200
+  },
+  "supported_channels": ["slack", "email", "pagerduty", "webhook"]
+}
