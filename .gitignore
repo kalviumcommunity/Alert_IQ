@@ -12,3 +12,4 @@ __pycache__/
 # Logs
 *.log
 !logs/sample_output.log
+!logs/prompt_comparison_output.log
