@@ -61,7 +61,9 @@ class ChatClient:
         self,
         messages: List[Dict[str, str]],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = 1000
+        max_tokens: Optional[int] = 1000,
+        top_p: Optional[float] = None,
+        stop: Optional[List[str]] = None
     ) -> Optional[str]:
         """
         Sends a chat completion request to the configured API.
@@ -70,6 +72,8 @@ class ChatClient:
             messages: List of message dicts with 'role' and 'content'.
             temperature: Sampling temperature.
             max_tokens: Maximum tokens in completion.
+            top_p: Nucleus sampling probability threshold.
+            stop: List of stop sequences to halt generation.
 
         Returns:
             The model's text response string, or None if the request failed.
@@ -85,8 +89,12 @@ class ChatClient:
             "messages": messages,
             "temperature": temperature
         }
-        if max_tokens:
+        if max_tokens is not None:
             payload["max_tokens"] = max_tokens
+        if top_p is not None:
+            payload["top_p"] = top_p
+        if stop is not None:
+            payload["stop"] = stop
 
         # Task 3: Log outgoing request payload
         logger.info("Sending chat completion request to: %s", endpoint)
