@@ -13,7 +13,7 @@ from src.token_counter import count_tokens
 
 @dataclass
 class Chunk:
-    """A retrievable piece of a source document."""
+    """A retrievable piece of a source document with traceable metadata."""
     content: str
     source: str
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -25,6 +25,16 @@ class Chunk:
     @property
     def token_count(self) -> int:
         return count_tokens(self.content)
+
+    def citation(self) -> str:
+        """Return a human-readable source reference for a retrieved chunk."""
+        filename = self.metadata.get("filename", self.source)
+        index = self.metadata.get("chunk_index", 0)
+        section = self.metadata.get("section")
+        location = f"chunk {index}"
+        if section:
+            location += f", section {section}"
+        return f"{filename} ({location})"
 
 
 class Chunker:
@@ -55,6 +65,37 @@ class Chunker:
             return []
         return [paragraph.strip() for paragraph in text.split("\n\n") if paragraph.strip()]
 
+    @staticmethod
+    def _paragraph_spans(text: str) -> List[Tuple[str, int, int]]:
+        """Return paragraph text together with its original character span."""
+        spans: List[Tuple[str, int, int]] = []
+        for paragraph in text.split("\n\n"):
+            stripped = paragraph.strip()
+            if not stripped:
+                continue
+            leading = len(paragraph) - len(paragraph.lstrip())
+            start = text.find(stripped, len("\n\n"), len(text))
+            if spans:
+                search_from = spans[-1][2] + 2
+                start = text.find(stripped, search_from)
+            elif start == -1:
+                start = leading
+            end = start + len(stripped)
+            spans.append((stripped, start, end))
+        return spans
+
+    @staticmethod
+    def _section_for_position(text: str, position: int) -> str | None:
+        """Find the nearest Markdown heading before a chunk position."""
+        section = None
+        for line in text[:position].splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                heading = stripped.lstrip("#").strip()
+                if heading:
+                    section = heading
+        return section
+
     @classmethod
     def chunk_document(
         cls,
@@ -63,27 +104,43 @@ class Chunker:
         size: int = 500,
         overlap: int = 50,
     ) -> List[Chunk]:
-        """Chunk one document using the requested strategy."""
+        """Chunk one document and attach source, position, and section metadata."""
         strategy = strategy.lower().strip()
+        text = document.content
         if strategy == "fixed":
-            texts = cls.fixed_chunks(document.content, size=size, overlap=overlap)
+            step = size - overlap
+            raw_chunks = []
+            for start in range(0, len(text), step):
+                raw = text[start:start + size]
+                stripped = raw.strip()
+                if stripped:
+                    left_trim = len(raw) - len(raw.lstrip())
+                    chunk_start = start + left_trim
+                    raw_chunks.append((stripped, chunk_start, chunk_start + len(stripped)))
+                if start + size >= len(text):
+                    break
+            cls.fixed_chunks(text, size=size, overlap=overlap)  # validate arguments
         elif strategy == "paragraph":
-            texts = cls.paragraph_chunks(document.content)
+            raw_chunks = cls._paragraph_spans(text)
         else:
             raise ValueError("strategy must be 'fixed' or 'paragraph'")
 
-        return [
-            Chunk(
-                content=text,
-                source=document.source,
-                metadata={
-                    "filename": document.metadata.get("filename", Path(document.source).name),
-                    "chunk_index": index,
-                    "chunk_strategy": strategy,
-                },
-            )
-            for index, text in enumerate(texts)
-        ]
+        chunks: List[Chunk] = []
+        for index, (chunk_text, char_start, char_end) in enumerate(raw_chunks):
+            metadata = dict(document.metadata)
+            metadata.update({
+                "source": document.source,
+                "filename": document.metadata.get("filename", Path(document.source).name),
+                "chunk_index": index,
+                "chunk_strategy": strategy,
+                "char_start": char_start,
+                "char_end": char_end,
+            })
+            section = cls._section_for_position(text, char_start)
+            if section:
+                metadata["section"] = section
+            chunks.append(Chunk(content=chunk_text, source=document.source, metadata=metadata))
+        return chunks
 
     @classmethod
     def compare_strategies(
@@ -114,12 +171,7 @@ class Chunker:
 
 
 def choose_corpus_strategy(documents: List[Document]) -> Tuple[str, Dict[str, Any]]:
-    """
-    Compare both strategies over the corpus and choose paragraph boundaries.
-
-    The sample corpus contains policies, runbooks, and structured service-health
-    sections, so preserving paragraph/section boundaries is preferred for retrieval.
-    """
+    """Compare both strategies and choose the best fit for the Alert_IQ corpus."""
     if not documents:
         return "paragraph", {"reason": "No documents available for comparison."}
 
