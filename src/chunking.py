@@ -69,19 +69,16 @@ class Chunker:
     def _paragraph_spans(text: str) -> List[Tuple[str, int, int]]:
         """Return paragraph text together with its original character span."""
         spans: List[Tuple[str, int, int]] = []
+        cursor = 0
         for paragraph in text.split("\n\n"):
+            paragraph_start = cursor
+            cursor += len(paragraph) + 2
             stripped = paragraph.strip()
             if not stripped:
                 continue
-            leading = len(paragraph) - len(paragraph.lstrip())
-            start = text.find(stripped, len("\n\n"), len(text))
-            if spans:
-                search_from = spans[-1][2] + 2
-                start = text.find(stripped, search_from)
-            elif start == -1:
-                start = leading
-            end = start + len(stripped)
-            spans.append((stripped, start, end))
+            left_trim = len(paragraph) - len(paragraph.lstrip())
+            start = paragraph_start + left_trim
+            spans.append((stripped, start, start + len(stripped)))
         return spans
 
     @staticmethod
@@ -107,9 +104,15 @@ class Chunker:
         """Chunk one document and attach source, position, and section metadata."""
         strategy = strategy.lower().strip()
         text = document.content
+
         if strategy == "fixed":
+            # Validate first, then retain exact positions for traceability.
+            if size <= 0:
+                raise ValueError("size must be greater than 0")
+            if overlap < 0 or overlap >= size:
+                raise ValueError("overlap must be >= 0 and smaller than size")
             step = size - overlap
-            raw_chunks = []
+            raw_chunks: List[Tuple[str, int, int]] = []
             for start in range(0, len(text), step):
                 raw = text[start:start + size]
                 stripped = raw.strip()
@@ -119,7 +122,6 @@ class Chunker:
                     raw_chunks.append((stripped, chunk_start, chunk_start + len(stripped)))
                 if start + size >= len(text):
                     break
-            cls.fixed_chunks(text, size=size, overlap=overlap)  # validate arguments
         elif strategy == "paragraph":
             raw_chunks = cls._paragraph_spans(text)
         else:
