@@ -22,7 +22,7 @@ class TestChunking(unittest.TestCase):
         chunks = Chunker.fixed_chunks(text, size=10, overlap=2)
         self.assertEqual(chunks[0], "abcdefghij")
         self.assertEqual(chunks[1][:2], "ij")
-        self.assertEqual("".join(chunks), "abcdefghijijqrstuvuvyz")
+        self.assertEqual("".join(chunks), "abcdefghijijqrstuvuvwxyz")
 
     def test_paragraph_chunks_preserve_boundaries(self):
         chunks = Chunker.paragraph_chunks(self.document.content)
