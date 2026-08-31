@@ -26,6 +26,10 @@ data/vector_store/
 !logs/vector_db_readback.log
 !logs/indexing_summary.log
 !logs/sample_query_results.log
+!logs/filtered_retrieval_demo.log
+!logs/retrieval_tuning_experiments.log
+
+
 
 
 
