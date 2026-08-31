@@ -29,6 +29,8 @@ data/vector_store/
 !logs/filtered_retrieval_demo.log
 !logs/retrieval_tuning_experiments.log
 !logs/reranking_before_after.log
+!logs/retrieval_evaluation_results.log
+
 
 
 
