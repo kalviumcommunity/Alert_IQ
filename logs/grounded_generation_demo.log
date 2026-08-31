@@ -1,0 +1,71 @@
+================================================================================
+🛡️  Alert_IQ - Grounded Answer Generation & Source Accuracy Audit
+================================================================================
+🗄️  Vector Collection     : alert_iq_knowledge_base (4 chunks)
+
+================================================================================
+📌 [DEMO 1] GROUNDED ANSWER GENERATION & SOURCE ACCURACY AUDIT
+================================================================================
+💬 Query : "What are the emergency mitigation steps for DB-RB-402 database replica latency lag spikes?"
+
+📄 GENERATED GROUNDED ANSWER:
+--------------------------------------------------------------------------------
+Based on the verified runbook [1]:
+
+1. **Inspect Active Connections**: Run `SELECT pid, state, query_start, query FROM pg_stat_activity WHERE state != 'idle'` to identify blocking queries [1].
+2. **Terminate Stalled Queries**: Execute `SELECT pg_terminate_backend(pid)` for transactions running longer than 30 minutes [1].
+3. **Traffic Shedding**: Divert non-critical analytical queries to secondary replica pools [1].
+4. **Escalate**: If replication lag exceeds 1500ms for over 10 minutes, page the Database Reliability SRE lead [1].
+--------------------------------------------------------------------------------
+
+🔍 SOURCE ACCURACY AUDIT:
+  • Accuracy Verdict   : 100% FACTUAL & GROUNDED ✅
+  • Grounded Facts     : ['pg_stat_activity', 'pg_terminate_backend', '30 minutes', 'non-critical', '1500ms', '10 minutes']
+  • Unsupported Claims : []
+  • Citations Detected : ['[1]']
+  • Supporting Chunks  : ['runbook_database_lag_md::chunk_000', 'service_health_export_html::chunk_000']
+
+================================================================================
+📌 [DEMO 2] MISSING-CONTEXT QUERY & SAFETY FALLBACK
+================================================================================
+💬 Out-of-Domain Query : "What is the Stripe payment gateway webhook HMAC secret key rotation schedule?"
+
+📄 SYSTEM FALLBACK RESPONSE:
+--------------------------------------------------------------------------------
+Insufficient alert context to recommend action. Refer to standard incident escalation policy.
+--------------------------------------------------------------------------------
+  • Fallback Triggered   : True ✅
+  • Retrieved Chunks     : 0 (Below threshold)
+  • Hallucination Status : ELIMINATED (Refused unverified answer)
+
+================================================================================
+📌 [DEMO 3] COMPARATIVE AUDIT: WITH RETRIEVAL VS. WITHOUT RETRIEVAL
+================================================================================
+💬 Evaluation Query: "What are the emergency mitigation steps for DB-RB-402 database replica latency lag spikes?"
+
+--- [A] GENERATED WITH RETRIEVAL GROUNDING (RAG Pipeline) ---
+Based on the verified runbook [1]:
+
+1. **Inspect Active Connections**: Run `SELECT pid, state, query_start, query FROM pg_stat_activity WHERE state != 'idle'` to identify blocking queries [1].
+2. **Terminate Stalled Queries**: Execute `SELECT pg_terminate_backend(pid)` for transactions running longer than 30 minutes [1].
+3. **Traffic Shedding**: Divert non-critical analytical queries to secondary replica pools [1].
+4. **Escalate**: If replication lag exceeds 1500ms for over 10 minutes, page the Database Reliability SRE lead [1].
+Sources Cited: ['runbook_database_lag.md', 'service_health_export.html']
+
+--- [B] GENERATED WITHOUT RETRIEVAL (Unassisted Parametric Memory) ---
+To fix database lag, check CPU and disk I/O metrics on your cloud dashboard. You might want to restart the database container or scale up the instance size. Consult your team's internal documentation for further advice.
+
+📊 GROUNDING IMPACT ANALYSIS:
+--------------------------------------------------------------------------------
+  1. Grounded RAG cites specific internal runbook IDs, exact SQL commands (`pg_terminate_backend`), and exact SLA thresholds.
+  2. Unassisted generation only provided generic, unverified advice without source attribution or actionable internal commands.
+
+================================================================================
+🏁 FINAL GROUNDED GENERATION AUDIT OUTCOME
+================================================================================
+• Injected Context Grounding : VERIFIED (Answers strictly adhere to evidence)
+• Source Claim Accuracy      : 100% (No fabricated flags or parameters)
+• Missing Context Fallback   : VERIFIED (Safe refusal message triggered)
+• Retrieval Advantage        : CONFIRMED (Internal runbook commands vs generic guesses)
+• Production Readiness       : READY FOR ON-CALL ASSISTANT DEPLOYMENT 🚀
+================================================================================
