@@ -24,4 +24,6 @@ data/vector_store/
 !logs/document_loader_intake.log
 !logs/cleaning_pipeline_before_after.log
 !logs/vector_db_readback.log
+!logs/indexing_summary.log
+
 
