@@ -30,6 +30,8 @@ data/vector_store/
 !logs/retrieval_tuning_experiments.log
 !logs/reranking_before_after.log
 !logs/retrieval_evaluation_results.log
+!logs/rag_pipeline_execution.log
+
 
 
 
