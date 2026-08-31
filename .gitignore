@@ -33,6 +33,8 @@ data/vector_store/
 !logs/rag_pipeline_execution.log
 !logs/augmented_prompt_sample.log
 !logs/grounded_generation_demo.log
+!logs/citation_verification_demo.log
+
 
 
 
