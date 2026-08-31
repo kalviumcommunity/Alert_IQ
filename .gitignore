@@ -9,6 +9,9 @@ __pycache__/
 *.so
 .pytest_cache/
 
+# Vector store data
+data/vector_store/
+
 # Logs
 *.log
 !logs/sample_output.log
@@ -20,3 +23,5 @@ __pycache__/
 !logs/template_render_examples.log
 !logs/document_loader_intake.log
 !logs/cleaning_pipeline_before_after.log
+!logs/vector_db_readback.log
+
