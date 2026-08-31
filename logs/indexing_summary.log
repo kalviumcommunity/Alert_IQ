@@ -1,0 +1,80 @@
+================================================================================
+📚 Alert_IQ - Corpus Vector Indexing & Integrity Validation Report
+================================================================================
+📂 Corpus Path          : C:\Users\hp\Desktop\3.11\data\corpus
+🗄️  Vector Collection    : alert_iq_knowledge_base
+📐 Vector Dimension     : 768 dimensions
+📏 Distance Metric      : cosine
+
+[Task 1 & 2] CORPUS INGESTION & VECTOR STORAGE
+--------------------------------------------------------------------------------
+• Total Files Discovered: 5
+• Documents Ingested    : 4
+• Chunks Produced       : 4
+• Ingestion Failures    : 1
+  ⚠️ Skipped: corrupt_unsupported.bin -> Unsupported Format: '.bin' is not a supported document type.
+• Records Upserted      : 4
+
+[Task 3] INDEXED COUNT RECONCILIATION
+--------------------------------------------------------------------------------
+• Produced Chunks Count : 4
+• Vector DB Stored Count: 4
+• Count Validation Check: 4 == 4 → ✅ MATCHED
+
+[Task 4] SPOT-CHECK READBACK INTEGRITY AUDIT
+--------------------------------------------------------------------------------
+[1] Record ID: incident_policy_txt::chunk_000
+    • ID Match          : YES ✅
+    • Text Match        : YES ✅
+    • Metadata Match    : YES ✅
+    • Vector Dimension  : 768 / 768 dims ✅
+    • Source Document   : incident_policy.txt
+    • Chunk Index       : 0
+    • Section / Page    : N/A (p. N/A)
+    • Text Preview      : "ALERT_IQ ON-CALL ESCALATION POLICY (REV 2026.3)
+
+1. Level 1 Notification (0 - 5 ..."
+
+[2] Record ID: metrics_schema_json::chunk_000
+    • ID Match          : YES ✅
+    • Text Match        : YES ✅
+    • Metadata Match    : YES ✅
+    • Vector Dimension  : 768 / 768 dims ✅
+    • Source Document   : metrics_schema.json
+    • Chunk Index       : 0
+    • Section / Page    : N/A (p. N/A)
+    • Text Preview      : "{
+"system": "Alert_IQ Telemetry Engine",
+"sla_thresholds": {
+"critical_response_..."
+
+[3] Record ID: runbook_database_lag_md::chunk_000
+    • ID Match          : YES ✅
+    • Text Match        : YES ✅
+    • Metadata Match    : YES ✅
+    • Vector Dimension  : 768 / 768 dims ✅
+    • Source Document   : runbook_database_lag.md
+    • Chunk Index       : 0
+    • Section / Page    : N/A (p. N/A)
+    • Text Preview      : "# Database Replica Latency Triage Runbook (DB-RB-402)
+
+## Overview This runbook ..."
+
+[4] Record ID: service_health_export_html::chunk_000
+    • ID Match          : YES ✅
+    • Text Match        : YES ✅
+    • Metadata Match    : YES ✅
+    • Vector Dimension  : 768 / 768 dims ✅
+    • Source Document   : service_health_export.html
+    • Chunk Index       : 0
+    • Section / Page    : N/A (p. N/A)
+    • Text Preview      : "Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Expo..."
+
+================================================================================
+🏁 FINAL INDEXING & VALIDATION OUTCOME
+================================================================================
+• All Chunks Indexed    : YES ✅
+• Count Reconciled      : YES ✅
+• Spot-Check Audit Pass : YES ✅ (100% Valid)
+• Overall Status        : READY FOR RETRIEVAL 🚀
+================================================================================
