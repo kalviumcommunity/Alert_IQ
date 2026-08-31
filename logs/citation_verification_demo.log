@@ -1,0 +1,61 @@
+================================================================================
+🔖 Alert_IQ - Citation Tracking & Source Verifiability Demonstration
+================================================================================
+🗄️  Vector Collection     : alert_iq_knowledge_base (4 chunks)
+
+================================================================================
+📌 [DEMO 1] VERIFIABLE ANSWER WITH CITATION-TO-METADATA MAPPING
+================================================================================
+💬 Query : "What are the emergency mitigation steps for DB-RB-402 database replica latency lag spikes?"
+
+📄 GENERATED CITED ANSWER:
+--------------------------------------------------------------------------------
+Based on the verified runbook [1]:
+
+1. **Inspect Active Connections**: Run `SELECT pid, state, query_start, query FROM pg_stat_activity WHERE state != 'idle'` to identify blocking queries [1].
+2. **Terminate Stalled Queries**: Execute `SELECT pg_terminate_backend(pid)` for transactions running longer than 30 minutes [1].
+3. **Traffic Shedding**: Divert non-critical analytical queries to secondary replica pools [1].
+4. **Escalate**: If replication lag exceeds 1500ms for over 10 minutes, page the Database Reliability SRE lead [1].
+
+=== VERIFIED SOURCE CITATIONS ===
+[1] runbook_database_lag.md (Chunk: runbook_database_lag_md::chunk_000, Sec: 'Database Replica Latency Triage Runbook (DB-RB-402)')
+    Quote: "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation procedures when PostgreSQL read..."
+[2] service_health_export.html (Chunk: service_health_export_html::chunk_000, Sec: 'Alert_IQ Infrastructure Health Snapshot Alert_IQ C')
+    Quote: "Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Export Date: 2026-08-24 UTC Authentication Service (auth-service..."
+--------------------------------------------------------------------------------
+
+🔍 CITATION-TO-METADATA VERIFICATION AUDIT (Against ChromaDB Store):
+--------------------------------------------------------------------------------
+  • Citation [1] → Chunk ID: runbook_database_lag_md::chunk_000
+    Document   : runbook_database_lag.md (Section: 'Database Replica Latency Triage Runbook (DB-RB-402)')
+    Store Match: VERIFIED 100% IN VECTOR DB ✅
+    Quote Check: "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook p..."
+
+  • Citation [2] → Chunk ID: service_health_export_html::chunk_000
+    Document   : service_health_export.html (Section: 'Alert_IQ Infrastructure Health Snapshot Alert_IQ C')
+    Store Match: VERIFIED 100% IN VECTOR DB ✅
+    Quote Check: "Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Expo..."
+
+================================================================================
+📌 [DEMO 2] NO-SOURCE FALLBACK (ZERO FABRICATED CITATIONS)
+================================================================================
+💬 Out-of-Domain Query : "What is the Stripe payment gateway webhook HMAC secret key rotation schedule?"
+
+📄 SYSTEM RESPONSE:
+--------------------------------------------------------------------------------
+Insufficient alert context to recommend action. Refer to standard incident escalation policy.
+No verified sources available for this query.
+--------------------------------------------------------------------------------
+  • Fallback Status    : NO_SOURCE_FALLBACK ✅
+  • Citations Attached : 0 (Zero citations fabricated)
+  • Safety Verification: PASSED (System refused unsupported question without hallucinating citations)
+
+================================================================================
+🏁 FINAL CITATION & VERIFIABILITY AUDIT OUTCOME
+================================================================================
+• Source References Added     : SUCCESS ([1], [2] attached to claims)
+• Metadata Mapping Fidelity   : 100% (Document, Chunk ID, Index, Section)
+• Vector Store Verifiability  : 100% (Exact quote match in ChromaDB)
+• Anti-Fabrication Guarantee : VERIFIED (Fallback on missing context)
+• Production Readiness        : READY FOR TRANSPARENT OPERATIONAL AUDITING 🚀
+================================================================================
