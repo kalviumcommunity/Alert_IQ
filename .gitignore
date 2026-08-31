@@ -28,6 +28,8 @@ data/vector_store/
 !logs/sample_query_results.log
 !logs/filtered_retrieval_demo.log
 !logs/retrieval_tuning_experiments.log
+!logs/reranking_before_after.log
+
 
 
 
