@@ -1,0 +1,149 @@
+================================================================================
+📝 Alert_IQ - Grounded Augmented Prompt Assembly & Token Budgeting
+================================================================================
+🗄️  Vector Collection     : alert_iq_knowledge_base (4 chunks)
+🎯 Total Token Limit      : 2048 tokens
+🛡️  Response Reserve       : 400 tokens
+
+================================================================================
+📌 [PROMPT-DEMO-1] Database Replica Lag Mitigation Query
+💬 Query: "What are the emergency mitigation steps for DB-RB-402 database replica latency lag spikes?"
+================================================================================
+
+📊 TOKEN BUDGET BREAKDOWN:
+--------------------------------------------------------------------------------
+  • Total Model Limit       : 2048 tokens
+  • System Prompt Tokens    : 190 tokens
+  • User Query Tokens       : 18 tokens
+  • Response Reserve Tokens : 400 tokens
+  • Allowed Context Budget  : 1378 tokens
+  • Allocated Context Tokens: 317 tokens (2 chunks admitted, 0 omitted)
+  • Total Prompt Tokens     : 600 tokens
+  • Remaining Headroom      : 1048 tokens
+
+🔖 SOURCE REFERENCE MAP:
+--------------------------------------------------------------------------------
+  • [1] → runbook_database_lag.md (Chunk ID: runbook_database_lag_md::chunk_000)
+  • [2] → service_health_export.html (Chunk ID: service_health_export_html::chunk_000)
+
+📄 RENDERED AUGMENTED PROMPT PREVIEW:
+--------------------------------------------------------------------------------
+=== SYSTEM PROMPT ===
+You are the Alert_IQ AI Incident Assistant, an internal specialist supporting on-call engineers.
+
+ROLE & OBJECTIVE:
+Provide accurate, actionable triage procedures based exclusively on the verified runbook and policy chunks provided in the context.
+
+STRICT GROUNDING RULES:
+1. FACTUAL ADHERENCE: Answer ONLY using information explicitly stated in the provided context chunks.
+2. NO SPECULATION: Do NOT extrapolate commands, flags, URLs, or procedures not explicitly documented in the context.
+3. CITATION MANDATE: When citing facts or recommending steps, include the source reference marker (e.g. [1], [2], or [runbook_database_lag.md]) corresponding to the evidence chunk.
+4. INSUFFICIENT CONTEXT FALLBACK: If the provided context does not contain sufficient details to confidently answer the question, you MUST explicitly respond with:
+   "Insufficient alert context to recommend action. Refer to standard incident escalation policy."
+
+=== USER PROMPT ===
+[ALERT METADATA]
+Alert Id: ALT-9402
+Severity: CRITICAL
+Service: Postgres-Primary
+
+[RETRIEVED RUNBOOK & POLICY CONTEXT]
+--- [SOURCE REF: [1] | Document: runbook_database_lag.md | Chunk ID: runbook_database_lag_md::chunk_000] ---
+# Database Replica Latency Triage Runbook (DB-RB-402)
+
+## Overview This runbook provides emergency mitigation procedures when PostgreSQL read replica replication delay exceeds 500ms or connection pools reach 90% utilization.
+
+## Immediate Triage Steps 1. **Inspect Active Connections**: Run `SELECT pid, state, query_start, query FROM pg_stat_activity WHERE state != 'idle'` to find blocking queries.
+2. **Terminate Stalled Queries**: Execute `SELECT pg_terminate_backend(pid)` for transactions running longer than 30 minutes.
+3. **Traffic Shedding**: Divert non-critical analytical queries to secondary replica pools.
+4. **Escalate**: If replication lag exceeds 1500ms for over 10 minutes, page the Database Reliability SRE lead.
+
+--- [SOURCE REF: [2] | Document: service_health_export.html | Chunk ID: service_health_export_html::chunk_000] ---
+Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Export Date: 2026-08-24 UTC Authentication Service (auth-service)
+Status: Healthy. Average latency 34ms, error rate 0.02%. 12 active pod replicas running across 3 availability zones.
+Billing & Payment API (billing-api)
+Status: Degraded. Intermittent 504 Gateway Timeouts detected on external payment provider webhooks. Auto-retry mechanism engaged.
+
+[USER QUESTION]
+What are the emergency mitigation steps for DB-RB-402 database replica latency lag spikes?
+
+[TRIAGE INSTRUCTIONS]
+Provide actionable triage steps adhering strictly to the context above. Reference evidence using bracketed markers like [1], [2].
+
+================================================================================
+📌 [PROMPT-DEMO-2] On-Call Escalation Matrix Query
+💬 Query: "What is the Level 1 on-call notification policy and escalation timeline for P1 critical incidents?"
+================================================================================
+
+📊 TOKEN BUDGET BREAKDOWN:
+--------------------------------------------------------------------------------
+  • Total Model Limit       : 2048 tokens
+  • System Prompt Tokens    : 190 tokens
+  • User Query Tokens       : 19 tokens
+  • Response Reserve Tokens : 400 tokens
+  • Allowed Context Budget  : 1379 tokens
+  • Allocated Context Tokens: 351 tokens (2 chunks admitted, 0 omitted)
+  • Total Prompt Tokens     : 633 tokens
+  • Remaining Headroom      : 1015 tokens
+
+🔖 SOURCE REFERENCE MAP:
+--------------------------------------------------------------------------------
+  • [1] → incident_policy.txt (Chunk ID: incident_policy_txt::chunk_000)
+  • [2] → runbook_database_lag.md (Chunk ID: runbook_database_lag_md::chunk_000)
+
+📄 RENDERED AUGMENTED PROMPT PREVIEW:
+--------------------------------------------------------------------------------
+=== SYSTEM PROMPT ===
+You are the Alert_IQ AI Incident Assistant, an internal specialist supporting on-call engineers.
+
+ROLE & OBJECTIVE:
+Provide accurate, actionable triage procedures based exclusively on the verified runbook and policy chunks provided in the context.
+
+STRICT GROUNDING RULES:
+1. FACTUAL ADHERENCE: Answer ONLY using information explicitly stated in the provided context chunks.
+2. NO SPECULATION: Do NOT extrapolate commands, flags, URLs, or procedures not explicitly documented in the context.
+3. CITATION MANDATE: When citing facts or recommending steps, include the source reference marker (e.g. [1], [2], or [runbook_database_lag.md]) corresponding to the evidence chunk.
+4. INSUFFICIENT CONTEXT FALLBACK: If the provided context does not contain sufficient details to confidently answer the question, you MUST explicitly respond with:
+   "Insufficient alert context to recommend action. Refer to standard incident escalation policy."
+
+=== USER PROMPT ===
+[ALERT METADATA]
+Alert Id: ALT-1021
+Severity: HIGH
+Service: Core-Platform
+
+[RETRIEVED RUNBOOK & POLICY CONTEXT]
+--- [SOURCE REF: [1] | Document: incident_policy.txt | Chunk ID: incident_policy_txt::chunk_000] ---
+ALERT_IQ ON-CALL ESCALATION POLICY (REV 2026.3)
+
+1. Level 1 Notification (0 - 5 Minutes): Automated alert dispatches to primary on-call engineer via PagerDuty and Slack #incidents channel.
+
+2. Level 2 Escalation (5 - 15 Minutes): If incident unacknowledged after 5 minutes, alert automatically escalates to secondary engineer and Engineering Manager.
+
+3. Level 3 Major Incident Protocol (15+ Minutes): For Severity 1 (CRITICAL) outages impacting customer transactions, initiate War Room video bridge and post public status updates every 20 minutes.
+
+--- [SOURCE REF: [2] | Document: runbook_database_lag.md | Chunk ID: runbook_database_lag_md::chunk_000] ---
+# Database Replica Latency Triage Runbook (DB-RB-402)
+
+## Overview This runbook provides emergency mitigation procedures when PostgreSQL read replica replication delay exceeds 500ms or connection pools reach 90% utilization.
+
+## Immediate Triage Steps 1. **Inspect Active Connections**: Run `SELECT pid, state, query_start, query FROM pg_stat_activity WHERE state != 'idle'` to find blocking queries.
+2. **Terminate Stalled Queries**: Execute `SELECT pg_terminate_backend(pid)` for transactions running longer than 30 minutes.
+3. **Traffic Shedding**: Divert non-critical analytical queries to secondary replica pools.
+4. **Escalate**: If replication lag exceeds 1500ms for over 10 minutes, page the Database Reliability SRE lead.
+
+[USER QUESTION]
+What is the Level 1 on-call notification policy and escalation timeline for P1 critical incidents?
+
+[TRIAGE INSTRUCTIONS]
+Provide actionable triage steps adhering strictly to the context above. Reference evidence using bracketed markers like [1], [2].
+
+================================================================================
+🏁 FINAL PROMPT ASSEMBLY VALIDATION
+================================================================================
+• Chunk Injection & Formatting : SUCCESS (Structured delimiters)
+• Token Budget Enforcement    : SUCCESS (Guaranteed response headroom)
+• Source Markers ([1], [2])   : SUCCESS (Citation anchor mapping)
+• Anti-Hallucination Guardrails: SUCCESS (Strict grounding instructions)
+• Production Readiness         : READY FOR LLM GENERATION 🚀
+================================================================================

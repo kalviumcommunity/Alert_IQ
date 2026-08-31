@@ -31,6 +31,8 @@ data/vector_store/
 !logs/reranking_before_after.log
 !logs/retrieval_evaluation_results.log
 !logs/rag_pipeline_execution.log
+!logs/augmented_prompt_sample.log
+
 
 
 
