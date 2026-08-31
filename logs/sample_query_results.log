@@ -1,0 +1,147 @@
+================================================================================
+🔍 Alert_IQ - Semantic Retrieval & Top-K Query Demonstration Report
+================================================================================
+🗄️  Vector Collection    : alert_iq_knowledge_base
+📦 Total Indexed Records : 4
+📐 Embedding Dimension   : 768 dimensions
+📏 Distance Space Metric : cosine
+
+================================================================================
+🎯 [Query 1: Database Replica Latency & Triage]
+💬 Query: "How do on-call engineers triage database replica latency and lag spikes?"
+================================================================================
+• Query Embedding Dimension : 768 floats ✅
+• Sample Vector Values      : [-0.025016, 0.054832, -0.020481, -0.047563]
+
+--------------------------------------------------------------------------------
+📊 Results with k = 1 (1 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: metrics_schema_json::chunk_000
+    • Similarity Score : 0.0802 (Distance: 0.9198)
+    • Source Document  : metrics_schema.json
+    • Chunk Index      : 0
+    • Token Count      : 69
+    • Text Preview     : "{ "system": "Alert_IQ Telemetry Engine", "sla_thresholds": { "critical_response_time_seconds": 300, "high_resp..."
+
+--------------------------------------------------------------------------------
+📊 Results with k = 2 (2 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: metrics_schema_json::chunk_000
+    • Similarity Score : 0.0802 (Distance: 0.9198)
+    • Source Document  : metrics_schema.json
+    • Chunk Index      : 0
+    • Token Count      : 69
+    • Text Preview     : "{ "system": "Alert_IQ Telemetry Engine", "sla_thresholds": { "critical_response_time_seconds": 300, "high_resp..."
+
+  [Rank #2] Chunk ID: runbook_database_lag_md::chunk_000
+    • Similarity Score : 0.0323 (Distance: 0.9677)
+    • Source Document  : runbook_database_lag.md
+    • Chunk Index      : 0
+    • Token Count      : 159
+    • Text Preview     : "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation p..."
+
+--------------------------------------------------------------------------------
+📊 Results with k = 3 (3 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: metrics_schema_json::chunk_000
+    • Similarity Score : 0.0802 (Distance: 0.9198)
+    • Source Document  : metrics_schema.json
+    • Chunk Index      : 0
+    • Token Count      : 69
+    • Text Preview     : "{ "system": "Alert_IQ Telemetry Engine", "sla_thresholds": { "critical_response_time_seconds": 300, "high_resp..."
+
+  [Rank #2] Chunk ID: runbook_database_lag_md::chunk_000
+    • Similarity Score : 0.0323 (Distance: 0.9677)
+    • Source Document  : runbook_database_lag.md
+    • Chunk Index      : 0
+    • Token Count      : 159
+    • Text Preview     : "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation p..."
+
+  [Rank #3] Chunk ID: service_health_export_html::chunk_000
+    • Similarity Score : 0.0000 (Distance: 1.0195)
+    • Source Document  : service_health_export.html
+    • Chunk Index      : 0
+    • Token Count      : 96
+    • Text Preview     : "Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Export Date: 2026-08-24 UTC Authen..."
+
+📈 K-VARIATION ANALYSIS:
+  • At k=1: Returned only the single highest-scoring match (metrics_schema_json::chunk_000 with score 0.0802).
+  • At k=3: Expanded context retrieval to 3 chunks, providing broader grounding across the corpus.
+
+================================================================================
+🎯 [Query 2: SLA Response Thresholds & Severity Escalation]
+💬 Query: "What are the SLA response time thresholds and escalation matrix for critical incidents?"
+================================================================================
+• Query Embedding Dimension : 768 floats ✅
+• Sample Vector Values      : [-0.045542, -0.061361, 0.009393, 0.038378]
+
+--------------------------------------------------------------------------------
+📊 Results with k = 1 (1 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: runbook_database_lag_md::chunk_000
+    • Similarity Score : 0.0716 (Distance: 0.9284)
+    • Source Document  : runbook_database_lag.md
+    • Chunk Index      : 0
+    • Token Count      : 159
+    • Text Preview     : "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation p..."
+
+--------------------------------------------------------------------------------
+📊 Results with k = 2 (2 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: runbook_database_lag_md::chunk_000
+    • Similarity Score : 0.0716 (Distance: 0.9284)
+    • Source Document  : runbook_database_lag.md
+    • Chunk Index      : 0
+    • Token Count      : 159
+    • Text Preview     : "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation p..."
+
+  [Rank #2] Chunk ID: incident_policy_txt::chunk_000
+    • Similarity Score : 0.0467 (Distance: 0.9533)
+    • Source Document  : incident_policy.txt
+    • Chunk Index      : 0
+    • Token Count      : 132
+    • Text Preview     : "ALERT_IQ ON-CALL ESCALATION POLICY (REV 2026.3) 1. Level 1 Notification (0 - 5 Minutes): Automated alert dispa..."
+
+--------------------------------------------------------------------------------
+📊 Results with k = 4 (4 chunk(s) returned):
+--------------------------------------------------------------------------------
+  [Rank #1] Chunk ID: runbook_database_lag_md::chunk_000
+    • Similarity Score : 0.0716 (Distance: 0.9284)
+    • Source Document  : runbook_database_lag.md
+    • Chunk Index      : 0
+    • Token Count      : 159
+    • Text Preview     : "# Database Replica Latency Triage Runbook (DB-RB-402) ## Overview This runbook provides emergency mitigation p..."
+
+  [Rank #2] Chunk ID: incident_policy_txt::chunk_000
+    • Similarity Score : 0.0467 (Distance: 0.9533)
+    • Source Document  : incident_policy.txt
+    • Chunk Index      : 0
+    • Token Count      : 132
+    • Text Preview     : "ALERT_IQ ON-CALL ESCALATION POLICY (REV 2026.3) 1. Level 1 Notification (0 - 5 Minutes): Automated alert dispa..."
+
+  [Rank #3] Chunk ID: service_health_export_html::chunk_000
+    • Similarity Score : 0.0000 (Distance: 1.0125)
+    • Source Document  : service_health_export.html
+    • Chunk Index      : 0
+    • Token Count      : 96
+    • Text Preview     : "Alert_IQ Infrastructure Health Snapshot Alert_IQ Core Cluster Health Report Export Date: 2026-08-24 UTC Authen..."
+
+  [Rank #4] Chunk ID: metrics_schema_json::chunk_000
+    • Similarity Score : 0.0000 (Distance: 1.0167)
+    • Source Document  : metrics_schema.json
+    • Chunk Index      : 0
+    • Token Count      : 69
+    • Text Preview     : "{ "system": "Alert_IQ Telemetry Engine", "sla_thresholds": { "critical_response_time_seconds": 300, "high_resp..."
+
+📈 K-VARIATION ANALYSIS:
+  • At k=1: Returned only the single highest-scoring match (runbook_database_lag_md::chunk_000 with score 0.0716).
+  • At k=4: Expanded context retrieval to 4 chunks, providing broader grounding across the corpus.
+
+================================================================================
+🏁 RETRIEVAL VALIDATION SUMMARY
+================================================================================
+• Query Embedding Match : SUCCESS (768-d)
+• Top-K Search Ranking  : SUCCESS (Highest similarity first)
+• Metadata Preservation : SUCCESS (Source, chunk_index, and text included)
+• K-Variation Dynamics  : VALIDATED (k=1 focused vs k>1 multi-context)
+================================================================================
