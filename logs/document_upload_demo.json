@@ -1,0 +1,30 @@
+{
+  "upload_request": {
+    "method": "POST",
+    "url": "http://localhost:5000/documents",
+    "form": "file=@runtime_policy.md"
+  },
+  "upload_response": {
+    "status": "indexed",
+    "filename": "runtime_policy.md",
+    "summary": {
+      "document": "uploads/runtime_policy.md",
+      "chunks": 1,
+      "indexed": 1,
+      "collection": "alert_iq_knowledge_base"
+    }
+  },
+  "follow_up_query": {
+    "method": "POST",
+    "url": "http://localhost:5000/query",
+    "json": {
+      "question": "Do uploaded documents become searchable without restarting the API?"
+    }
+  },
+  "follow_up_result": {
+    "status": "success",
+    "answer_contains": "becomes available to the RAG query endpoint without restarting the API service",
+    "source_document": "runtime_policy.md",
+    "restart_required": false
+  }
+}
