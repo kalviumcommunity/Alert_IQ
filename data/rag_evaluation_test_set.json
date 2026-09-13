@@ -1,0 +1,6 @@
+[
+  {"id":"EVAL-01","question":"What should be checked first when PostgreSQL replica latency is high?","expected_answer":"Check replication slots and long-running transactions first.","expected_sources":["runbook_database_replica_lag.md"]},
+  {"id":"EVAL-02","question":"What should be inspected if database latency remains elevated after transaction cleanup?","expected_answer":"Inspect PgBouncer connection pool utilization and consider scaling read-replica capacity.","expected_sources":["runbook_database_replica_lag.md"]},
+  {"id":"EVAL-03","question":"What is the critical response-time SLA threshold in the telemetry schema?","expected_answer":"The critical response-time threshold is 5 seconds.","expected_sources":["telemetry_sla_spec.md"]},
+  {"id":"EVAL-04","question":"What is the webhook HMAC secret rotation schedule for Stripe?","expected_answer":"No verified Alert_IQ source specifies a Stripe webhook HMAC rotation schedule.","expected_sources":[]}
+]
