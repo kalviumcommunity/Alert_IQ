@@ -1,0 +1,29 @@
+{
+  "question": "What is the refund policy?",
+  "events": [
+    {
+      "type": "citations",
+      "sources": [
+        {
+          "id": "refund-policy-03",
+          "label": "[1]",
+          "document": "refund-policy.md",
+          "chunk_id": "refund-policy-03",
+          "text": "Refund requests must be submitted within 14 days.",
+          "score": 0.91
+        }
+      ]
+    },
+    {"type": "token", "text": "Based on the "},
+    {"type": "token", "text": "verified Alert_IQ "},
+    {"type": "token", "text": "knowledge base: "},
+    {"type": "token", "text": "Refund requests must be submitted within 14 days."},
+    {"type": "done"}
+  ],
+  "ui_behavior": {
+    "loading": "Retrieving sources and starting stream…",
+    "streaming": "Answer grows progressively in the assistant message.",
+    "citation_inspection": "Expanding Sources reveals document, chunk ID, score, and retrieved text.",
+    "error": "Partial output is preserved and the user can submit the question again."
+  }
+}
