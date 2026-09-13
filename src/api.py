@@ -2,10 +2,11 @@
 import os
 from typing import Any, Dict
 
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
 from src.document_upload import DocumentUploadService
 from src.rag_pipeline import RAGPipeline
+from src.streaming_rag import StreamingRAGService
 from src.vector_store import VectorStore
 
 app = Flask(__name__)
@@ -69,6 +70,32 @@ def query():
     except Exception as exc:
         app.logger.exception("RAG query failed")
         return jsonify({"status": "error", "error": "RAG service failed.", "detail": str(exc)}), 500
+
+
+@app.post("/query/stream")
+def query_stream():
+    """Stream RAG citations and answer tokens as Server-Sent Events."""
+    if not request.is_json:
+        return jsonify({"status": "error", "error": "Request body must be JSON."}), 415
+
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify({"status": "error", "error": "Request body must be a JSON object."}), 400
+
+    question = payload.get("question")
+    if not isinstance(question, str) or not question.strip():
+        return jsonify({"status": "error", "error": "Missing required field: question."}), 400
+
+    try:
+        service = StreamingRAGService(create_pipeline())
+        return Response(
+            service.events(question.strip()),
+            mimetype="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+    except Exception:
+        app.logger.exception("Unable to start RAG stream")
+        return jsonify({"status": "error", "error": "Could not start the RAG stream."}), 500
 
 
 @app.post("/documents")
