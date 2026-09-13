@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#f7f7f7"/>
+  <text x="60" y="65" font-family="Arial, sans-serif" font-size="30" font-weight="700">Alert_IQ — RAG Chat Mock UX</text>
+  <text x="60" y="95" font-family="Arial, sans-serif" font-size="16">Upload → Index → Ask → Grounded Answer → Verify Sources</text>
+
+  <rect x="60" y="135" width="1080" height="120" rx="12" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="85" y="170" font-family="Arial, sans-serif" font-size="19" font-weight="700">1. Knowledge Base</text>
+  <rect x="85" y="188" width="230" height="42" rx="6" fill="#eee" stroke="#777"/>
+  <text x="105" y="215" font-family="Arial, sans-serif" font-size="15">Upload document</text>
+  <text x="345" y="214" font-family="Arial, sans-serif" font-size="15">refund-policy.md  ✓ Indexed</text>
+  <text x="780" y="214" font-family="Arial, sans-serif" font-size="15">ChromaDB · 768-d vectors</text>
+
+  <rect x="60" y="280" width="1080" height="285" rx="12" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="85" y="315" font-family="Arial, sans-serif" font-size="19" font-weight="700">2. Chat / Query</text>
+  <rect x="85" y="335" width="1030" height="72" rx="8" fill="#fafafa" stroke="#aaa"/>
+  <text x="110" y="378" font-family="Arial, sans-serif" font-size="17">What is the refund window?</text>
+  <rect x="85" y="425" width="1030" height="105" rx="8" fill="#f0f0f0" stroke="#999"/>
+  <text x="110" y="458" font-family="Arial, sans-serif" font-size="16" font-weight="700">Grounded answer</text>
+  <text x="110" y="488" font-family="Arial, sans-serif" font-size="16">Customers can request a refund within 14 days of purchase. [1]</text>
+  <text x="110" y="514" font-family="Arial, sans-serif" font-size="14">Streaming status: Complete · Cache: miss</text>
+
+  <rect x="60" y="590" width="1080" height="115" rx="12" fill="white" stroke="#333" stroke-width="2"/>
+  <text x="85" y="625" font-family="Arial, sans-serif" font-size="19" font-weight="700">3. Sources / Verification</text>
+  <text x="85" y="655" font-family="Arial, sans-serif" font-size="15">[1] refund-policy.md · chunk refund-policy-03 · score 0.91</text>
+  <text x="85" y="681" font-family="Arial, sans-serif" font-size="14">“Refund requests must be submitted within 14 days.”  →  inspect source text</text>
+</svg>
