@@ -1,0 +1,35 @@
+================================================================================
+Alert_IQ - Hallucination Guardrails & Refusal Handling
+================================================================================
+Threshold: 0.72
+Minimum supporting chunks: 1
+
+[CASE 1] STRONG CONTEXT -> ANSWER
+--------------------------------------------------------------------------------
+Question: What evidence is required for project submission?
+Retrieved scores: [0.91, 0.55]
+Strong chunks: 1
+Status: answered
+Answer: The submission requires the evidence described in the verified project guide [1].
+Generation called: YES
+
+[CASE 2] WEAK CONTEXT -> REFUSAL
+--------------------------------------------------------------------------------
+Question: What is the refund policy for a product not in this corpus?
+Retrieved scores: [0.41, 0.68]
+Strong chunks: 0
+Status: refused_weak_context
+Answer: I don't have enough reliable context to answer that.
+Sources returned: []
+Generation called: NO
+
+[CASE 3] NO CONTEXT -> REFUSAL
+--------------------------------------------------------------------------------
+Question: What does the corpus say about an unrelated topic?
+Retrieved scores: []
+Status: refused_no_context
+Answer: I don't have enough reliable context to answer that.
+Sources returned: []
+Generation called: NO
+
+Conclusion: The guardrail checks retrieval quality BEFORE generation. A low or empty evidence set cannot trigger an unsupported answer.
