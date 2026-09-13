@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from typing import Any, Dict
 
+from src.cleaning_pipeline import TextCleaner
 from src.document_loader import DocumentLoader
 from src.index_corpus import CorpusIndexer
 from src.ingestion_pipeline import IngestionPipeline
@@ -35,7 +36,7 @@ class DocumentUploadService:
             raise ValueError("A filename is required.")
         suffix = Path(filename).suffix.lower()
         if suffix not in self.SUPPORTED_EXTENSIONS:
-            raise ValueError(f"Unsupported file type '{suffix or '[none]'}'. Supported: .txt, .md, .pdf")
+            raise ValueError(f"Unsupported file type '{suffix or '[none]}'. Supported: .txt, .md, .pdf")
         return suffix
 
     def store_bytes(self, filename: str, content: bytes) -> Path:
@@ -58,7 +59,7 @@ class DocumentUploadService:
         if document is None:
             raise ValueError(load_error or "Document could not be loaded.")
 
-        cleaned, _ = __import__("src.cleaning_pipeline", fromlist=["TextCleaner"]).TextCleaner.clean_document(document)
+        cleaned, _ = TextCleaner.clean_document(document)
         chunks = self.ingestion.chunker.chunk_document(
             cleaned,
             size=self.ingestion.chunk_size,
