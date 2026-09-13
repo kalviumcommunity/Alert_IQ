@@ -1,15 +1,20 @@
 """HTTP API for the Alert_IQ grounded RAG service."""
 import os
+import time
+import uuid
 from typing import Any, Dict
 
 from flask import Flask, Response, jsonify, request
 
 from src.document_upload import DocumentUploadService
+from src.query_cache import QueryCache
 from src.rag_pipeline import RAGPipeline
 from src.streaming_rag import StreamingRAGService
+from src.usage_monitor import build_usage, log_rag_request
 from src.vector_store import VectorStore
 
 app = Flask(__name__)
+query_cache = QueryCache(ttl_seconds=int(os.getenv("RAG_CACHE_TTL_SECONDS", str(15 * 60))))
 
 
 def load_config() -> Dict[str, Any]:
@@ -53,7 +58,7 @@ def health():
 
 @app.post("/query")
 def query():
-    """Accept {\"question\": \"...\"} and return a grounded RAG response."""
+    """Accept a question, use a TTL cache, and log usage and latency."""
     if not request.is_json:
         return jsonify({"status": "error", "error": "Request body must be JSON."}), 415
 
@@ -65,10 +70,37 @@ def query():
     if not isinstance(question, str) or not question.strip():
         return jsonify({"status": "error", "error": "Missing required field: question."}), 400
 
+    question = question.strip()
+    request_id = str(uuid.uuid4())
+    started = time.perf_counter()
+    settings = {"model_name": load_config()["model_name"]}
+    cached = query_cache.get(question, settings=settings)
+    if cached is not None:
+        response = dict(cached)
+        response["metadata"] = dict(response.get("metadata", {}))
+        response["metadata"]["cache_hit"] = True
+        answer = response.get("answer", "")
+        log_rag_request(request_id, question, answer, response.get("sources", []), True,
+                        (time.perf_counter() - started) * 1000,
+                        usage=build_usage(question, answer, True, settings["model_name"]))
+        response["usage"] = build_usage(question, answer, True, settings["model_name"])
+        return jsonify(response), 200
+
     try:
-        return jsonify(response_from_rag(question.strip())), 200
+        result = response_from_rag(question)
+        result["metadata"]["cache_hit"] = False
+        query_cache.set(question, result, settings=settings)
+        latency_ms = (time.perf_counter() - started) * 1000
+        usage = build_usage(question, result["answer"], False, settings["model_name"])
+        result["usage"] = usage
+        log_rag_request(request_id, question, result["answer"], result["sources"], False, latency_ms, usage=usage)
+        return jsonify(result), 200
     except Exception as exc:
         app.logger.exception("RAG query failed")
+        log_rag_request(request_id, question, "", [], False,
+                        (time.perf_counter() - started) * 1000,
+                        error=str(exc),
+                        usage=build_usage(question, "", False, settings["model_name"]))
         return jsonify({"status": "error", "error": "RAG service failed.", "detail": str(exc)}), 500
 
 
