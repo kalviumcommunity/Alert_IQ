@@ -223,14 +223,14 @@ For local development, the defaults require only the Python dependencies, a conf
 
 ## Final Delivery Marker
 
-The Sprint 2 RAG final-delivery candidate is this branch/PR and its merged commit. After review, the final repository version should be tagged with:
+This PR is the **Sprint 2 RAG final-delivery candidate**. After review and merge, create the requested final Git tag from the resulting `main` commit:
 
 ```bash
 git tag sprint-2-rag-final
- git push origin sprint-2-rag-final
+git push origin sprint-2-rag-final
 ```
 
-The tag is deliberately created after the final PR is merged so it points at the reviewed `main` commit.
+The tag should be created after the final PR is merged so it points at the reviewed `main` commit.
 
 ## Project Structure
 
