@@ -1,0 +1,26 @@
+{
+  "backend": "http://localhost:5000",
+  "interaction": {
+    "question": "What should I check when PostgreSQL replica lag is high?",
+    "loading_state": "Searching the knowledge base...",
+    "response": {
+      "status": "success",
+      "answer": "Check replication slots and long-running transactions, then review replica capacity if lag remains elevated.",
+      "sources": [
+        {
+          "source_document": "runbook_database_replica_lag.md",
+          "chunk_id": "chunk-2",
+          "score": 0.91
+        }
+      ]
+    },
+    "rendered_sections": [
+      "Answer",
+      "Sources"
+    ]
+  },
+  "error_interaction": {
+    "simulated_condition": "RAG API unavailable",
+    "ui_message": "Could not reach the RAG API. Please try again."
+  }
+}
