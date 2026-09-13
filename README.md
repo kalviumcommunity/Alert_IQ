@@ -2,6 +2,15 @@
 
 Alert_IQ is an intelligent monitoring, alerting, and notification management system with a grounded Retrieval-Augmented Generation (RAG) application. The RAG delivery includes document ingestion, chunking, embeddings, ChromaDB storage, retrieval, grounded generation, citations, conversational context, streaming, caching, and usage monitoring.
 
+## Sprint 2 Final Submission
+
+- [Product Requirements Document](PRD.md)
+- [RAG Mock UX Wireframe](docs/mock-ux.svg)
+- [Final Delivery Runbook](docs/FINAL_DELIVERY.md)
+- [End-to-End Demo Evidence](logs/e2e_demo_sample.md)
+
+The repository Pull Requests tab contains the team's implementation history. Reviewers can verify the distributed contribution volume there.
+
 ## RAG Features
 
 - Upload `.txt`, `.md`, or `.pdf` documents through the backend.
@@ -223,14 +232,14 @@ For local development, the defaults require only the Python dependencies, a conf
 
 ## Final Delivery Marker
 
-This PR is the **Sprint 2 RAG final-delivery candidate**. After review and merge, create the requested final Git tag from the resulting `main` commit:
+This repository is the **Sprint 2 RAG final-delivery candidate**. After review and merge of the final evidence PR, create the requested final Git tag from the resulting `main` commit:
 
 ```bash
 git tag sprint-2-rag-final
 git push origin sprint-2-rag-final
 ```
 
-The tag should be created after the final PR is merged so it points at the reviewed `main` commit.
+The tag should be created after the final evidence PR is merged so it points at the reviewed `main` commit.
 
 ## Project Structure
 
@@ -242,7 +251,8 @@ Alert_IQ/
 ├── data/samples/        # Reproducible demo documents
 ├── scripts/             # End-to-end smoke/demo scripts
 ├── logs/                # Committed sample evidence and reports
-├── docs/                # Feature and operational documentation
+├── docs/                # Feature and operational documentation + mock UX
+├── PRD.md               # Sprint 2 product requirements
 ├── .env.example         # Safe configuration template
 ├── .gitignore           # Secret/local-data exclusions
 ├── requirements.txt     # Backend dependencies
