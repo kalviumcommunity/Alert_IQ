@@ -1,0 +1,35 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/query",
+    "headers": {"Content-Type": "application/json"},
+    "body": {
+      "question": "What should I check when database replica latency is high?"
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "body": {
+      "answer": "Based on the verified Alert_IQ knowledge base:\n• Check replication slots and long-running transactions.",
+      "sources": [
+        {
+          "id": "db-rb-402-01",
+          "rank": 1,
+          "score": 0.93,
+          "source_document": "runbook_database_replica_lag.md",
+          "chunk_index": 1
+        }
+      ],
+      "status": "success",
+      "metadata": {
+        "query": "What should I check when database replica latency is high?",
+        "model_name": "gemini-2.5-flash",
+        "stage_metrics": {
+          "total_latency_ms": 38.7,
+          "retrieved_chunk_count": 1,
+          "embedding_dimension": 768
+        }
+      }
+    }
+  }
+}
