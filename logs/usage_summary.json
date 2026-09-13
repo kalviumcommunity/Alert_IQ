@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-09-14T00:12:00+00:00",
+  "total_requests": 3,
+  "cache_hits": 1,
+  "cache_hit_rate": 0.33,
+  "errors": 1,
+  "total_input_tokens": 31,
+  "total_output_tokens": 56,
+  "total_estimated_cost": 0.00004065,
+  "average_latency_ms": 68.63,
+  "notes": "Sample report generated from logs/usage_sample.jsonl. Costs use the documented approximation in src/usage_monitor.py."
+}
