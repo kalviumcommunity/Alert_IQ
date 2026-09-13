@@ -30,9 +30,8 @@ def test_query_returns_structured_rag_response(monkeypatch):
         ]
         stage_metrics = {"total_latency_ms": 12.3, "retrieved_chunk_count": 1}
 
-    monkeypatch.setattr("src.api.create_pipeline", lambda: type("FakePipeline", (), {
-        "run": lambda self, query: FakeResponse()
-    })())
+    fake_pipeline = type("FakePipeline", (), {"run": lambda self, query: FakeResponse()})()
+    monkeypatch.setattr("src.api.create_pipeline", lambda: fake_pipeline)
 
     client = app.test_client()
     response = client.post("/query", json={"question": "How do I triage replica lag?"})
@@ -42,8 +41,8 @@ def test_query_returns_structured_rag_response(monkeypatch):
     assert body["status"] == "success"
     assert body["answer"] == FakeResponse.answer
     assert body["sources"][0]["source_document"] == "runbook.md"
-    assert body["metadata"]["retrieved_chunk_count"] if False else True
-    assert "stage_metrics" in body["metadata"]
+    assert body["metadata"]["query"] == FakeResponse.query
+    assert body["metadata"]["stage_metrics"]["retrieved_chunk_count"] == 1
 
 
 def test_query_maps_pipeline_failure_to_500(monkeypatch):
